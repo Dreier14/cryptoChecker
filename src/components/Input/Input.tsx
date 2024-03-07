@@ -10,27 +10,25 @@ export const Input: React.FC<IComponentProps> = observer(({ store }) => {
     const clearStatusMessage = () => {
         setTimeout(() => {
             setStatusMessage(undefined)
-        }, 5000)
+        }, 5000);
     }
 
-    const handleInput = (e: string) => {
-        setInputValue(e);
-    }
-
-    const handleSubmit = (e: string) => {
-        if (store.cryptoSymbol?.includes(e)) {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>, inputValue: string) => {
+        e.preventDefault();
+        if (store.cryptoSymbol?.includes(inputValue)) {
             setStatusMessage('Coin has already been added');
             clearStatusMessage();
             return;
         }
 
-        if (store.cryptoData?.filter(f =>  f.symbol === e).length === 0) {
+        if (store.cryptoData?.filter(f =>  f.symbol === inputValue).length === 0) {
             setStatusMessage('Crypto Coin symbol was not found');
             clearStatusMessage();
             return;
         }
 
-        store.setCryptoCurrencySymbol(e);
+        store.setCryptoCurrencySymbol(inputValue);
+        setInputValue('');
     }
 
     return (
@@ -41,12 +39,14 @@ export const Input: React.FC<IComponentProps> = observer(({ store }) => {
                 </Row>
                 <br/>
                 <Row>
-                    <div style={{ display: "flex"}}>
-                        <Form.Control size="lg" type="text" placeholder="Add a crypto symbol" onChange={e => handleInput(e.target.value)}/>
-                            <Button variant="primary" onClick={() => handleSubmit(inputValue)} style={{ marginLeft: "15px"}}>
-                            Add
-                        </Button>
-                    </div>
+                    <Form onSubmit={(e) => handleSubmit(e, inputValue)}>
+                        <div style={{ display: "flex" }}>
+                            <Form.Control size="lg" type="text" value={inputValue} placeholder="Add a crypto symbol" onChange={e => setInputValue((e.target.value.toUpperCase()))}/>
+                            <Button variant="primary" disabled={inputValue === ''} type="submit" style={{ marginLeft: "15px"}}>
+                                Add
+                            </Button>
+                        </div>
+                    </Form>
                 </Row>
                 { 
                     statusMessage ?

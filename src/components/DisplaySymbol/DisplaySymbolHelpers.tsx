@@ -1,17 +1,19 @@
 export const getCoinList = (cryptoSymbol: Array<string>) => {
     return (
         <>
-            <ul>
-                {
-                    cryptoSymbol.map((e, i) => {
-                        return (
-                            <li key={i}>
-                                {e}
-                            </li>
-                        )
-                    })
-                }
-            </ul>
+            <div style={{margin:"auto", width: "15%"}}>
+                <ul>
+                    {
+                        cryptoSymbol.map((e, i) => {
+                            return (
+                                <li key={i}>
+                                    {e}
+                                </li>
+                            )
+                        })
+                    }
+                </ul>
+            </div>
         </>
     );
 }

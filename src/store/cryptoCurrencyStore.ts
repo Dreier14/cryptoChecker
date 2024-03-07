@@ -18,7 +18,7 @@ export class CryptoCurrencyStore {
     @action
     setCryptoCurrencySymbol(cryptoSymbol: string): void {
         const cryptoArr = this.cryptoSymbol;
-        this.cryptoSymbol = cryptoArr?.concat(cryptoSymbol.toUpperCase());
+        this.cryptoSymbol = cryptoArr?.concat(cryptoSymbol);
     }
 
     @action

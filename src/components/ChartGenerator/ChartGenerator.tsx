@@ -8,19 +8,18 @@ interface ICryptoChartValues {
     cryptoData: Array<Record<string, string | number>> | undefined;
 }
 
-
 export const ChartGenerator: React.FC<ICryptoChartValues> = observer(({ cryptoSymbol, cryptoData }): JSX.Element =>  {
-    const data = filterCoinData(cryptoSymbol, cryptoData);
-
+    const chartData = filterCoinData(cryptoSymbol, cryptoData);
+    const hasChartData: boolean = chartData.length > 1;
     return (
         <>
             <Container>
                 {
-                    data.length > 1 ?
+                    hasChartData ?
                         <Chart 
                             chartType="BarChart"
                             height="400px"
-                            data={data}
+                            data={chartData}
                             options={options}
                         /> :
                         <div style={{textAlign: 'center'}}>
